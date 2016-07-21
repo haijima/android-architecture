@@ -14,24 +14,27 @@
  * limitations under the License.
  */
 
-package com.example.android.architecture.blueprints.todoapp.tasks;
+package com.example.android.architecture.blueprints.todoapp.util
+
+import android.support.test.espresso.IdlingResource
 
 /**
- * Used with the filter spinner in the tasks list.
+ * Contains a static reference to [IdlingResource], only available in the 'mock' build type.
  */
-public enum TasksFilterType {
-    /**
-     * Do not filter tasks.
-     */
-    ALL_TASKS,
+object EspressoIdlingResource {
 
-    /**
-     * Filters only the active (not completed yet) tasks.
-     */
-    ACTIVE_TASKS,
+    private val RESOURCE = "GLOBAL"
 
-    /**
-     * Filters only the completed tasks.
-     */
-    COMPLETED_TASKS
+    private val mCountingIdlingResource = SimpleCountingIdlingResource(RESOURCE)
+
+    fun increment() {
+        mCountingIdlingResource.increment()
+    }
+
+    fun decrement() {
+        mCountingIdlingResource.decrement()
+    }
+
+    val idlingResource: IdlingResource
+        get() = mCountingIdlingResource
 }
